@@ -50,16 +50,16 @@ include $(CLEAR_VARS)
 OPENCV_INSTALL_MODULES:=on
 OPENCV_CAMERA_MODULES:=off
 
-include /home/sujay/builds/src/OpenCV-2.4.9-android-sdk/sdk/native/jni/OpenCV.mk
+include /Network/Servers/fs.labs.encs/Volumes/raid2/users_b/jason_moss/Downloads/OpenCV-2.4.10-android-sdk/sdk/native/jni/OpenCV.mk
 
 LOCAL_MODULE := openalpr-native
 SOURCE_LIST := $(wildcard $(LOCAL_PATH)/*.cpp)
 HEADER_LIST := $(wildcard $(LOCAL_PATH)/*.h)
-LOCAL_SRC_FILES += $(HEADER_LIST:$(LOCAL_PATH)/%=%)
+#LOCAL_SRC_FILES += $(HEADER_LIST:$(LOCAL_PATH)/%=%)
 LOCAL_SRC_FILES += $(SOURCE_LIST:$(LOCAL_PATH)/%=%)
-LOCAL_C_INCLUDES += /home/sujay/builds/src/openalpr/src/openalpr
-LOCAL_C_INCLUDES += /home/sujay/builds/src/OpenCV-2.4.9-android-sdk/sdk/native/include
-LOCAL_C_INCLUDES += /home/sujay/tools/android-ndk-r10/platforms/android-19/arch-arm/usr/include
+LOCAL_C_INCLUDES += /Network/Servers/fs.labs.encs/Volumes/raid2/users_b/jason_moss/Repos/openalpr/src/openalpr
+LOCAL_C_INCLUDES += /Network/Servers/fs.labs.encs/Volumes/raid2/users_b/jason_moss/Downloads/OpenCV-2.4.10-android-sdk/sdk/native/include
+LOCAL_C_INCLUDES += /Network/Servers/fs.labs.encs/Volumes/raid2/users_b/jason_moss/Downloads/android-ndk-r10/platforms/android-19/arch-arm/usr/include
 LOCAL_SHARED_LIBRARIES += tesseract leptonica
 LOCAL_STATIC_LIBRARIES += openalpr support simpleini
 LOCAL_LDLIBS := -llog

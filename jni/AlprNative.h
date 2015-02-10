@@ -5,8 +5,8 @@
  * Created on 15 August, 2014, 6:39 PM
  */
 
-#ifndef ALPR_H
-#define	ALPR_H
+#ifndef ALPRN_H
+#define	ALPRN_H
 #define CONFIG_FILE	"/etc/openalpr.conf"
 
 #include <jni.h>
@@ -19,7 +19,7 @@ jstring _recognize(JNIEnv *, jobject,
 		jstring , jstring , jstring ,
 		jstring , jint );
 
-std::string detectandshow( Alpr* , cv::Mat , std::string );
+std::string detectandshow( alpr::Alpr* , cv::Mat , std::string );
 
 std::string errorJsonString(std::string);
 
@@ -28,5 +28,5 @@ std::string errorJsonString(std::string);
 }
 #endif
 
-#endif	/* ALPR_H */
+#endif	/* ALPRN_H */
 

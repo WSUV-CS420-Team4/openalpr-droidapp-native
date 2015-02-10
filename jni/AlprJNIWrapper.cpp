@@ -19,6 +19,8 @@
 #include "AlprJNIWrapper.h"
 #include "AlprNative.h"
 
+using namespace alpr;
+
 JNIEXPORT jstring JNICALL Java_org_openalpr_AlprJNIWrapper_recognize(JNIEnv *env,
 		jobject object, jstring jimgFilePath, jint jtopN)
 {
@@ -77,7 +79,7 @@ jstring _recognize(JNIEnv *env, jobject object,
 	std::string response = "";
 
 	cv::Mat frame;
-	Alpr alpr(country, configFilePath);
+	alpr::Alpr alpr(country, configFilePath);
 
 	const char* regionChars = env->GetStringUTFChars(jregion, NULL);
 
@@ -100,7 +102,7 @@ jstring _recognize(JNIEnv *env, jobject object,
 		return env->NewStringUTF(response.c_str());
 	}
 
-	if(fileExists(imgFilePath))
+	if(alpr::fileExists(imgFilePath))
 	{
 		frame = cv::imread(imgFilePath);
 		response = detectandshow(&alpr, frame, "");
@@ -116,10 +118,10 @@ jstring _recognize(JNIEnv *env, jobject object,
 JNIEXPORT jstring JNICALL Java_org_openalpr_AlprJNIWrapper_version
   (JNIEnv *env, jobject object)
 {
-	return env->NewStringUTF(Alpr::getVersion().c_str());
+	return env->NewStringUTF(alpr::Alpr::getVersion().c_str());
 }
 
-std::string detectandshow(Alpr* alpr, cv::Mat frame, std::string region) 
+std::string detectandshow(alpr::Alpr* alpr, cv::Mat frame, std::string region) 
 {
 	std::vector < uchar > buffer;
 	std::string resultJson = "";
@@ -128,15 +130,15 @@ std::string detectandshow(Alpr* alpr, cv::Mat frame, std::string region)
 	timespec startTime;
 	getTime(&startTime);
 
-	std::vector < AlprResult > results = alpr->recognize(buffer);
+	AlprResults results = alpr->recognize(std::string(buffer.begin(), buffer.end()));
 
 	timespec endTime;
 	getTime(&endTime);
 	double totalProcessingTime = diffclock(startTime, endTime);
 
-	if (results.size() > 0)
+	if (results.plates.size() > 0)
 	{
-		resultJson = alpr->toJson(results, totalProcessingTime);
+		resultJson = alpr->toJson(results);
 	}
 
 	return resultJson;
